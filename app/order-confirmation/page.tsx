@@ -2,9 +2,10 @@
 
 import CustomerHeader from "@/app/_components/CustomerHeader";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
-const OrderConfirmationPage = () => {
+// New component that uses searchParams
+function OrderConfirmationContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
@@ -16,82 +17,103 @@ const OrderConfirmationPage = () => {
   }, [orderId, router]);
 
   return (
+    <div className="max-w-2xl mx-auto px-4 py-16">
+      <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+        {/* Success Icon */}
+        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <span className="text-4xl">✓</span>
+        </div>
+
+        {/* Success Message */}
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          Order Placed Successfully!
+        </h1>
+        <p className="text-gray-600 mb-6">
+          Thank you for your order. We've received it and will start preparing
+          soon.
+        </p>
+
+        {/* Order ID */}
+        <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <p className="text-sm text-gray-500 mb-1">Order ID</p>
+          <p className="text-lg font-mono font-semibold text-gray-800">
+            #{orderId?.slice(-8).toUpperCase()}
+          </p>
+        </div>
+
+        {/* What's Next */}
+        <div className="text-left bg-blue-50 rounded-lg p-6 mb-6">
+          <h3 className="font-semibold text-gray-800 mb-3">
+            What happens next?
+          </h3>
+          <ul className="space-y-2 text-sm text-gray-600">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600 mt-1">1.</span>
+              <span>Restaurant confirms your order</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600 mt-1">2.</span>
+              <span>Your food is being prepared</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600 mt-1">3.</span>
+              <span>Driver picks up and delivers to you</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={() => router.push("/orders")}
+            className="flex-1 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
+          >
+            View My Orders
+          </button>
+          <button
+            onClick={() => router.push("/")}
+            className="flex-1 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition"
+          >
+            Back to Home
+          </button>
+        </div>
+
+        {/* Contact Info */}
+        <p className="text-sm text-gray-500 mt-6">
+          Need help? Contact us at{" "}
+          <a
+            href="mailto:support@foodie.com"
+            className="text-red-600 hover:underline"
+          >
+            support@foodie.com
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Main page component with Suspense
+const OrderConfirmationPage = () => {
+  return (
     <div className="bg-gray-50 min-h-screen">
       <CustomerHeader />
 
-      <div className="max-w-2xl mx-auto px-4 py-16">
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-          {/* Success Icon */}
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-4xl">✓</span>
+      <Suspense
+        fallback={
+          <div className="max-w-2xl mx-auto px-4 py-16">
+            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+              <div className="animate-pulse">
+                <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-6"></div>
+                <div className="h-8 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+              </div>
+            </div>
           </div>
-
-          {/* Success Message */}
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Order Placed Successfully!
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Thank you for your order. We've received it and will start preparing
-            soon.
-          </p>
-
-          {/* Order ID */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-500 mb-1">Order ID</p>
-            <p className="text-lg font-mono font-semibold text-gray-800">
-              #{orderId?.slice(-8).toUpperCase()}
-            </p>
-          </div>
-
-          {/* What's Next */}
-          <div className="text-left bg-blue-50 rounded-lg p-6 mb-6">
-            <h3 className="font-semibold text-gray-800 mb-3">
-              What happens next?
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">1.</span>
-                <span>Restaurant confirms your order</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">2.</span>
-                <span>Your food is being prepared</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">3.</span>
-                <span>Driver picks up and delivers to you</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button
-              onClick={() => router.push("/orders")}
-              className="flex-1 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
-            >
-              View My Orders
-            </button>
-            <button
-              onClick={() => router.push("/")}
-              className="flex-1 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition"
-            >
-              Back to Home
-            </button>
-          </div>
-
-          {/* Contact Info */}
-          <p className="text-sm text-gray-500 mt-6">
-            Need help? Contact us at{" "}
-            <a
-              href="mailto:support@foodie.com"
-              className="text-red-600 hover:underline"
-            >
-              support@foodie.com
-            </a>
-          </p>
-        </div>
-      </div>
+        }
+      >
+        <OrderConfirmationContent />
+      </Suspense>
     </div>
   );
 };
