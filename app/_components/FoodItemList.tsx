@@ -53,9 +53,7 @@ const FoodItemList = () => {
 
       const resto_id = restaurantData._id;
 
-      const res = await fetch(
-        `http://localhost:3000/api/restaurant/foods/${resto_id}`
-      );
+      const res = await fetch(`/api/restaurant/foods/${resto_id}`);
       const response = await res.json();
 
       if (response.success) {
@@ -72,12 +70,9 @@ const FoodItemList = () => {
   };
 
   const deleteFoodItem = async (id: string) => {
-    let response = await fetch(
-      `http://localhost:3000/api/restaurant/foods/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    let response = await fetch(`/api/restaurant/foods/${id}`, {
+      method: "DELETE",
+    });
     const data = await response.json();
     if (data.success) {
       loadFoodItems();

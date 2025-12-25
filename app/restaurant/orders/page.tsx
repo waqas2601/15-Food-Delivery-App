@@ -52,9 +52,7 @@ const RestaurantOrders = () => {
   const loadOrders = async (restaurantId: string) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/orders?restaurantId=${restaurantId}`
-      );
+      const response = await fetch(`/api/orders?restaurantId=${restaurantId}`);
       const data = await response.json();
 
       if (data.success) {
@@ -69,16 +67,13 @@ const RestaurantOrders = () => {
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/orders/${orderId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status: newStatus }),
-        }
-      );
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
       const data = await response.json();
 

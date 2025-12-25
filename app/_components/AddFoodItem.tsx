@@ -59,17 +59,14 @@ const AddFoodItem: React.FC<AddFoodItemProps> = ({ setAddItem, onSuccess }) => {
     try {
       const restaurantData = JSON.parse(restaurantString);
 
-      const response = await fetch(
-        "http://localhost:3000/api/restaurant/foods",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...formData,
-            resto_id: restaurantData._id,
-          }),
-        }
-      );
+      const response = await fetch("/api/restaurant/foods", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          resto_id: restaurantData._id,
+        }),
+      });
 
       const data = await response.json();
 

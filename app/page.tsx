@@ -49,7 +49,7 @@ export default function Home() {
     if (location) params.append("location", location);
     if (restaurant) params.append("restaurant", restaurant);
 
-    const url = `http://localhost:3000/api/customer${
+    const url = `/api/customer${
       params.toString() ? `?${params.toString()}` : ""
     }`;
 
@@ -61,9 +61,7 @@ export default function Home() {
   };
 
   const loadLocations = async () => {
-    const response = await fetch(
-      "http://localhost:3000/api/customer/locations"
-    );
+    const response = await fetch("/api/customer/locations");
     const data = await response.json();
     if (data.success) {
       setLocations(data.data);

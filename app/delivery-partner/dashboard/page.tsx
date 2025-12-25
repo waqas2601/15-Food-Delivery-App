@@ -63,7 +63,7 @@ const DeliveryPartnerDashboard = () => {
 
       // Load available orders (ready for pickup in partner's city)
       const availableResponse = await fetch(
-        `http://localhost:3000/api/delivery-partner/available-orders?city=${city}`
+        `/api/delivery-partner/available-orders?city=${city}`
       );
       const availableData = await availableResponse.json();
 
@@ -73,7 +73,7 @@ const DeliveryPartnerDashboard = () => {
 
       // Load my active deliveries
       const myDeliveriesResponse = await fetch(
-        `http://localhost:3000/api/delivery-partner/my-deliveries?partnerId=${partnerId}`
+        `/api/delivery-partner/my-deliveries?partnerId=${partnerId}`
       );
       const myDeliveriesData = await myDeliveriesResponse.json();
 
@@ -93,17 +93,14 @@ const DeliveryPartnerDashboard = () => {
     setAcceptingOrder(orderId);
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/delivery-partner/accept-order`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            orderId,
-            partnerId: partner._id,
-          }),
-        }
-      );
+      const response = await fetch(`/api/delivery-partner/accept-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId,
+          partnerId: partner._id,
+        }),
+      });
 
       const data = await response.json();
 
@@ -129,14 +126,11 @@ const DeliveryPartnerDashboard = () => {
 
   const updateDeliveryStatus = async (orderId: string, newStatus: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/orders/${orderId}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: newStatus }),
-        }
-      );
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
       const data = await response.json();
 

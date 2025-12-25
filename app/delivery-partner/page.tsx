@@ -76,14 +76,11 @@ const DeliveryPartnerAuth = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/delivery-partner",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...loginData, login: true }),
-        }
-      );
+      const response = await fetch("/api/delivery-partner", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...loginData, login: true }),
+      });
 
       const data = await response.json();
 
@@ -109,14 +106,11 @@ const DeliveryPartnerAuth = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/delivery-partner",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...signupData, login: false }),
-        }
-      );
+      const response = await fetch("/api/delivery-partner", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...signupData, login: false }),
+      });
 
       const data = await response.json();
 

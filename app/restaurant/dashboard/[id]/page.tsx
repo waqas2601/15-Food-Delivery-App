@@ -28,9 +28,7 @@ const EditFoodItem = () => {
   const loadFoodItem = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/restaurant/foods/edit/${id}`
-      );
+      const response = await fetch(`/api/restaurant/foods/edit/${id}`);
       const data = await response.json();
 
       if (data.success && data.result) {
@@ -86,21 +84,18 @@ const EditFoodItem = () => {
     setUpdating(true);
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/restaurant/foods/edit/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json", // Fixed typo: was "applicaton"
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            price: formData.price,
-            img_path: formData.img_path,
-            description: formData.description,
-          }),
-        }
-      );
+      const response = await fetch(`/api/restaurant/foods/edit/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json", // Fixed typo: was "applicaton"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          price: formData.price,
+          img_path: formData.img_path,
+          description: formData.description,
+        }),
+      });
 
       const data = await response.json();
 

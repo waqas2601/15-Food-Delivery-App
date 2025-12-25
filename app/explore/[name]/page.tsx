@@ -57,7 +57,7 @@ const Page = () => {
   const loadRestaurantDetails = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3000/api/customer/${id}`);
+      const response = await fetch(`/api/customer/${id}`);
       const data = await response.json();
 
       if (data.success) {

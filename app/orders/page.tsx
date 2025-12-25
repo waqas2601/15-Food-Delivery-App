@@ -55,9 +55,7 @@ const OrdersPage = () => {
   const loadOrders = async (userId: string) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/orders?userId=${userId}`
-      );
+      const response = await fetch(`/api/orders?userId=${userId}`);
       const data = await response.json();
 
       if (data.success) {
